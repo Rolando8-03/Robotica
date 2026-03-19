@@ -364,8 +364,6 @@ class Base:
     # ------------------------------------------------------------
 
     # ------------- FUNCIONES DE UTILIDAD ----------------
-    def esperar(self, ms):
-        wait(ms)
 
     def frenar(self):
         # hacemos que ambos motores frenen y esperamos un momento
