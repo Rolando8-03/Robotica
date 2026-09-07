@@ -17,7 +17,7 @@ def ejecutar_matriz_2(robot):
     """Ejecuta la secuencia de navegación y manipulación para la matriz 2."""
 
     robot.avanzar_recto(distancia_cm=-14, velocidad_max=900)
-    robot.girar(angulo_deg=90, potencia_max=90, perfil="encadenado")
+    robot.girar_a_rumbo(90)
 
     print("Voltaje:", robot.Hub.battery.voltage(), "mV")
     print("Ejecutando recorrido de matriz 2")
@@ -32,6 +32,7 @@ def ejecutar_matriz_2(robot):
     robot.motor_garra.reset_angle(0)
     robot.motor_garra_delantera.reset_angle(0)
     wait(200)
+    
 
     robot.avanzar_cruzando_lineas(
         cruces_objetivo=2,
