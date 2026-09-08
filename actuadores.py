@@ -85,9 +85,9 @@ def mover_garra_principal(
         return
 
     # ==========================================
-    # 3. LIMITAR ESCALA 0-200 (solo aplica si NO es apriete)
+    # 3. LIMITAR ESCALA 0-300 (solo aplica si NO es apriete)
     # ==========================================
-    grados = max(0, min(200, grados))
+    grados = max(0, min(300, grados))
 
     # ==========================================
     # 4. MOVER A LA POSICIÓN
