@@ -167,15 +167,15 @@ def dejar_bloques_matriz(robot):
     )
     robot.mover_garra_delantera(290)
     robot.avanzar_recto(
-        distancia_cm=1.8,
+        distancia_cm=1.5,
         velocidad_max=650,
         zona_rampa_cm=0.1,
         perfil="encadenado"
     )
 
     for _ in range(4):
-        robot.girar_corto(8, potencia_max=50, potencia_min=40)
-        robot.girar_corto(-8, potencia_max=50, potencia_min=40)
+        robot.girar_corto(8, potencia_max=60, potencia_min=40)
+        robot.girar_corto(-8, potencia_max=60, potencia_min=40)
 
     robot.avanzar_recto(
         distancia_cm=-1,
@@ -189,15 +189,7 @@ def dejar_bloques_matriz(robot):
         velocidad_max=500,
         perfil="seguro"
     )
-    robot.girar(
-        angulo_deg=180,
-        potencia_max=80,
-        potencia_min=70,
-        kp_base=4.0,
-        kd_base=6.0,
-        tolerancia_fin=0.6,
-        perfil="seguro"
-    )
+    robot.girar_hasta_negro("derecha", potencia=65)
 
 
 # Aquí termina la sección de movimientos para entrar en la matriz.
@@ -294,8 +286,8 @@ def dejar_bloques_matriz2(robot):
         perfil="encadenado"
     )
     for _ in range(4):
-        robot.girar_corto(8, potencia_max=50, potencia_min=40)
-        robot.girar_corto(-8, potencia_max=50, potencia_min=40)
+        robot.girar_corto(8, potencia_max=60, potencia_min=40)
+        robot.girar_corto(-8, potencia_max=60, potencia_min=40)
 
     robot.avanzar_recto(
         distancia_cm=-1,
@@ -311,7 +303,7 @@ def dejar_bloques_matriz2(robot):
         perfil="encadenado"
     )
     robot.girar(
-        180,
+        182,
         potencia_max=85,
         potencia_min=35,
         kp_base=5.0,
