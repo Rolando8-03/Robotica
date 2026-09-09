@@ -450,7 +450,146 @@ def girar(
     self.motor_derecho.hold()
     wait(20)
 
+def girar_hasta_negro(
+    self,
+    direccion,
+    potencia=60,
+    potencia_correccion=22,
+    objetivo_reflexion=15,
+    lecturas_confirmacion=3,
+    lecturas_fuera_negro=2,
+    tiempo_max_ms=8000,
+    max_intentos_correccion=3,
+    perfil="encadenado",
+    sensor_color=None
+):
+    """
+    Gira hacia derecha o izquierda hasta detectar negro.
 
+    Si detecta negro, frena y lo confirma.
+    Si al frenar ya se pasó de la línea, gira lentamente en sentido
+    contrario hasta volver a encontrar negro.
+    """
+
+    if sensor_color is None:
+        sensor_color = self.seguidor
+
+    direccion = direccion.lower()
+
+    if direccion not in ("derecha", "izquierda"):
+        raise ValueError(
+            'La direccion debe ser "derecha" o "izquierda".'
+        )
+
+    # En el robot: signo positivo gira hacia la derecha.
+    signo_inicial = 1 if direccion == "derecha" else -1
+    signo_actual = signo_inicial
+
+    potencia = int(self.limitar(abs(potencia), 20, 100))
+    potencia_correccion = int(
+        self.limitar(abs(potencia_correccion), 15, 50)
+    )
+
+    self.preparar_movimiento(
+        reset_motores=False,
+        reset_gyro=False,
+        perfil=perfil
+    )
+
+    self.motor_izquierdo.hold()
+    self.motor_derecho.hold()
+    wait(40)
+
+    cronometro = StopWatch()
+    cronometro.reset()
+
+    contador_fuera_negro = 0
+    listo_para_buscar = False
+
+    potencia_actual = potencia
+    intentos_correccion = 0
+
+    while True:
+
+        # Seguridad: si nunca encuentra negro, deja de girar.
+        if cronometro.time() >= tiempo_max_ms:
+            self.terminar_movimiento(
+                perfil=perfil,
+                modo="brake"
+            )
+
+            print("No se encontró negro durante el giro.")
+            return False
+
+        reflexion = sensor_color.reflection()
+
+        # Si comenzó encima de negro, primero debe salir de él.
+        if not listo_para_buscar:
+
+            if reflexion > objetivo_reflexion:
+                contador_fuera_negro += 1
+            else:
+                contador_fuera_negro = 0
+
+            if contador_fuera_negro >= lecturas_fuera_negro:
+                listo_para_buscar = True
+
+        # Ya está fuera del negro: ahora busca la siguiente línea negra.
+        elif reflexion <= objetivo_reflexion:
+
+            # Detectó negro: frena inmediatamente.
+            self.motor_izquierdo.brake()
+            self.motor_derecho.brake()
+            wait(25)
+
+            # Confirma que realmente quedó sobre negro.
+            confirmaciones = 0
+
+            for _ in range(lecturas_confirmacion):
+                if sensor_color.reflection() <= objetivo_reflexion:
+                    confirmaciones += 1
+
+                wait(5)
+
+            # Se detuvo correctamente sobre negro.
+            if confirmaciones >= lecturas_confirmacion:
+                self.terminar_movimiento(
+                    perfil=perfil,
+                    modo="hold"
+                )
+
+                return True
+
+            # Si después de frenar ya ve blanco, se pasó de la línea.
+            # Cambia al sentido contrario y busca negro lentamente.
+            intentos_correccion += 1
+
+            if intentos_correccion > max_intentos_correccion:
+                self.terminar_movimiento(
+                    perfil=perfil,
+                    modo="brake"
+                )
+
+                print("No se pudo corregir el giro sobre negro.")
+                return False
+
+            signo_actual = -signo_actual
+            potencia_actual = potencia_correccion
+
+            print(
+                "Se pasó del negro. Corrigiendo en sentido contrario..."
+            )
+
+        # Giro sobre el centro.
+        self.motor_izquierdo.dc(
+            signo_actual * potencia_actual
+        )
+
+        self.motor_derecho.dc(
+            -signo_actual * potencia_actual
+        )
+
+        wait(2)
 # -----------------------------------------------------------------------------
 # giro_de_arco
 # Describe un arco haciendo que cada rueda recorra una trayectoria distinta y corrigiendo con el IMU.
