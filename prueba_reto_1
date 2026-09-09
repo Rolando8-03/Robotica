@@ -213,13 +213,13 @@ robot.mover_garra_principal(velocidad=1000, grados=170, esperar=True)
 
 robot.avanzar_cruzando_lineas(2, velocidad=500, distancia_extra_cm=13)
 robot.mover_garra_principal(
-        300,
+        500,
         esperar=False,
         potencia_apriete=80,
         apretar=True
     )
 robot.avanzar_recto(distancia_cm=-2.5, velocidad_max=900, perfil="encadenado")
-robot.girar(angulo_deg=34, potencia_max=80, perfil="encadenado")
+robot.girar(angulo_deg=35, potencia_max=80, perfil="encadenado")
 
 #Ir a dejar los amarillos
 robot.avanzar_recto(distancia_cm=48, velocidad_max=900)
@@ -244,7 +244,7 @@ robot.avanzar_recto(distancia_cm=-2, velocidad_max=900)
 
 robot.seguir_linea_y_mover_torque(
     sensor_color=robot.seguidor,
-    distancia_cm=81,
+    distancia_cm=83,
     velocidad_max=100,
     lado="izquierda",
     tiempo_acomodo_ms=100,
@@ -257,7 +257,7 @@ robot.seguir_linea_y_mover_torque(
     potencia_captura=55,
     kp_captura=3.8,
     perfil_salida="encadenado",
-    distancia_torque_cm=65 ,      # a los 35 cm de los 45 se dispara el torque
+    distancia_torque_cm=68 ,      # a los 35 cm de los 45 se dispara el torque
     grados_torque=170,
     velocidad_torque=350
 )
