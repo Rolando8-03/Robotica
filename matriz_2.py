@@ -51,7 +51,7 @@ def ejecutar_matriz_2(robot):
     gc.collect()
     wait(200)
 
-    robot.girar_hasta_negro("izquierda", potencia=65)
+    robot.girar_hasta_negro("izquierda", potencia=60)
     
     robot.mover_garra_principal(900, 300, apretar=False, duty_cierre=100)
 
@@ -121,7 +121,7 @@ def ejecutar_matriz_2(robot):
     robot.mover_garra_delantera(260)
 
     robot.mover_garra_principal(
-        300,
+        450,
         esperar=False,
         potencia_apriete=100,
         apretar=True
@@ -184,7 +184,7 @@ def ejecutar_matriz_2(robot):
     robot.seguir_linea(
         sensor_color=robot.seguidor, 
         velocidad_max=80, 
-        distancia_cm=25, 
+        distancia_cm=23, 
         lado="izquierda", 
         tiempo_acomodo_ms=140, 
         tiempo_aceleracion_ms=140, 
