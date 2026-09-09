@@ -155,5 +155,11 @@ class Base:
     # ============================== NAVEGACIÓN ==============================
     # (Tus otras funciones aquí...)
     
-    # Realiza un giro absoluto usando el giroscopio como brújula
+       # Gira hacia un rumbo absoluto.
     girar_a_rumbo = navegacion.girar_a_rumbo
+
+    girar_hasta_negro = navegacion.girar_hasta_negro
+
+    # Establece la orientación actual como referencia.
+    establecer_norte = navegacion.establecer_norte
+    
