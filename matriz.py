@@ -15,10 +15,10 @@ from pybricks.tools import wait
 # -----------------------------------------------------------------------------
 def _realizar_lectura_estatica(
     self,
-    cantidad_lecturas=25,
-    espera_inicial_ms=250,
-    intervalo_lecturas_ms=40,
-    votos_minimos=5
+    cantidad_lecturas=12,
+    espera_inicial_ms=100,
+    intervalo_lecturas_ms=20,
+    votos_minimos=4
 ):
     self.frenar()
     wait(espera_inicial_ms)
@@ -137,7 +137,7 @@ def dejar_bloques_matriz(robot):
         perfil_salida="encadenado"
     )
     robot.mover_garra_principal(
-        300,
+        500,
         esperar=False,
         potencia_apriete=150,
         apretar=True
@@ -167,18 +167,18 @@ def dejar_bloques_matriz(robot):
     )
     robot.mover_garra_delantera(290)
     robot.avanzar_recto(
-        distancia_cm=1.5,
+        distancia_cm=1.3,
         velocidad_max=650,
         zona_rampa_cm=0.1,
         perfil="encadenado"
     )
 
-    for _ in range(4):
-        robot.girar_corto(8, potencia_max=60, potencia_min=40)
-        robot.girar_corto(-8, potencia_max=60, potencia_min=40)
+    for _ in range(3):
+        robot.girar_corto(9, potencia_max=70, potencia_min=40)
+        robot.girar_corto(-9, potencia_max=70, potencia_min=40)
 
     robot.avanzar_recto(
-        distancia_cm=-1,
+        distancia_cm=-1.3,
         velocidad_max=500,
         zona_rampa_cm=0.5,
         perfil="seguro"
@@ -189,7 +189,7 @@ def dejar_bloques_matriz(robot):
         velocidad_max=500,
         perfil="seguro"
     )
-    robot.girar_hasta_negro("derecha", potencia=65)
+    robot.girar_hasta_negro("derecha", potencia=75, potencia_correccion=32)
 
 
 # Aquí termina la sección de movimientos para entrar en la matriz.
@@ -250,7 +250,7 @@ def dejar_bloques_matriz2(robot):
         perfil_salida="encadenado"
     )
     robot.mover_garra_principal(
-        300,
+        500,
         esperar=False,
         potencia_apriete=150,
         apretar=True
@@ -285,9 +285,9 @@ def dejar_bloques_matriz2(robot):
         zona_rampa_cm=0.1,
         perfil="encadenado"
     )
-    for _ in range(4):
-        robot.girar_corto(8, potencia_max=60, potencia_min=40)
-        robot.girar_corto(-8, potencia_max=60, potencia_min=40)
+    for _ in range(3):
+        robot.girar_corto(9, potencia_max=70, potencia_min=40)
+        robot.girar_corto(-9, potencia_max=70, potencia_min=40)
 
     robot.avanzar_recto(
         distancia_cm=-1,
@@ -357,7 +357,7 @@ def dejar_bloques_matriz3(robot, distancia_entrada=0):
         lado="derecha"
     )
     wait(400)
-    robot.girar_corto(-9.8)
+    robot.girar_corto(-10.5)
     robot.avanzar_recto(
         distancia_cm=distancia_entrada,
         velocidad_max=650,
